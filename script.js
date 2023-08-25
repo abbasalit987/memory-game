@@ -4,12 +4,12 @@ const COLORS = [
     ["red", "./gifs/1.gif"],
     ["blue", "./gifs/2.gif"],
     ["green", "./gifs/3.gif"],
-    ["orange", "./gifs/4.gif"],
+    ["orange", "./gifs/9.gif"],
     ["purple", "./gifs/5.gif"],
     ["red", "./gifs/1.gif"],
     ["blue", "./gifs/2.gif"],
     ["green", "./gifs/3.gif"],
-    ["orange", "./gifs/4.gif"],
+    ["orange", "./gifs/9.gif"],
     ["purple", "./gifs/5.gif"],
 ]
 

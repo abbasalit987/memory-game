@@ -16,7 +16,8 @@ body h1{
 .memory-game div {
   flex-basis: 150px;
   height: 150px;
-  background-color: #333;
+  /* background-color: #333; */
+  background-image: url("./gifs/6.gif");
   border-radius: 10px;
   margin: 10px;
   cursor: pointer;
