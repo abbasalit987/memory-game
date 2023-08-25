@@ -46,7 +46,9 @@ let shuffledColors = shuffle(COLORS)
 // it creates a new div and gives it a class with the value of the color
 // it also adds an event listener for a click for each card
 function createDivsForColors(colorArray) {
+    // let count = 0
     for (let color of colorArray) {
+        // count = count + 1
         // create a new div
         const newDiv = document.createElement("div")
 
@@ -59,6 +61,13 @@ function createDivsForColors(colorArray) {
 
         // append the div to the element with an id of game
         gameContainer.append(newDiv)
+
+        // if (count === 5) {
+        //     count = 0
+        //     console.log(gameContainer)
+        //     let breakLine = document.createElement("br")
+        //     gameContainer.append(breakLine)
+        // }
     }
 }
 
@@ -66,8 +75,12 @@ function createDivsForColors(colorArray) {
 function handleCardClick(event) {
     // you can use event.target to see which element was clicked
     // console.log("you clicked", event.target)
-    if (lockGame) return
-    if (event.target === firstCard) return
+    if (lockGame) {
+        return
+    }
+    if (event.target === firstCard) {
+        return
+    }
 
     event.target.classList.add("flip")
     // event.target.style.backgroundColor = event.target.classList[0]
@@ -77,17 +90,22 @@ function handleCardClick(event) {
         cardFlipped = event.target
         firstCard = event.target
         firstCard.style.backgroundImage = `url(${firstCard.classList[1]})`
-        return
+    } else {
+        // second click
+        secondCard = event.target
+        secondCard.style.backgroundImage = `url(${secondCard.classList[1]})`
+        checkForMatch()
     }
-    // second click
-    secondCard = event.target
-    secondCard.style.backgroundImage = `url(${secondCard.classList[1]})`
-    checkForMatch()
 }
 
 function checkForMatch() {
     let isMatch = firstCard.classList[0] === secondCard.classList[0]
-    isMatch ? lockCards() : unflipCards()
+    // isMatch ? lockCards() : unflipCards()
+    if (isMatch) {
+        lockCards()
+    } else {
+        unflipCards()
+    }
 }
 
 function lockCards() {
