@@ -1,3 +1,8 @@
+body h1{
+  display: flex;
+  justify-content: center;
+}
+
 .memory-game {
   display: flex;
   flex-wrap: wrap;
