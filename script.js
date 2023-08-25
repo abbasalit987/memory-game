@@ -1,16 +1,16 @@
 const gameContainer = document.getElementById("game")
 
 const COLORS = [
-    "red",
-    "blue",
-    "green",
-    "orange",
-    "purple",
-    "red",
-    "blue",
-    "green",
-    "orange",
-    "purple",
+    ["red", "./gifs/1.gif"],
+    ["blue", "./gifs/2.gif"],
+    ["green", "./gifs/3.gif"],
+    ["orange", "./gifs/4.gif"],
+    ["purple", "./gifs/5.gif"],
+    ["red", "./gifs/1.gif"],
+    ["blue", "./gifs/2.gif"],
+    ["green", "./gifs/3.gif"],
+    ["orange", "./gifs/4.gif"],
+    ["purple", "./gifs/5.gif"],
 ]
 
 let cardFlipped = false
@@ -51,7 +51,8 @@ function createDivsForColors(colorArray) {
         const newDiv = document.createElement("div")
 
         // give it a class attribute for the value we are looping over
-        newDiv.classList.add(color)
+        newDiv.classList.add(color[0])
+        newDiv.classList.add(color[1])
 
         // call a function handleCardClick when a div is clicked on
         newDiv.addEventListener("click", handleCardClick)
@@ -69,33 +70,30 @@ function handleCardClick(event) {
     if (event.target === firstCard) return
 
     event.target.classList.add("flip")
-    event.target.style.backgroundColor = event.target.classList[0]
+    // event.target.style.backgroundColor = event.target.classList[0]
 
     if (!cardFlipped) {
         // first click
         cardFlipped = event.target
         firstCard = event.target
-
+        firstCard.style.backgroundImage = `url(${firstCard.classList[1]})`
         return
     }
-
     // second click
     secondCard = event.target
-
+    secondCard.style.backgroundImage = `url(${secondCard.classList[1]})`
     checkForMatch()
 }
 
 function checkForMatch() {
     let isMatch = firstCard.classList[0] === secondCard.classList[0]
-
     isMatch ? lockCards() : unflipCards()
 }
 
 function lockCards() {
     firstCard.removeEventListener("click", handleCardClick)
     secondCard.removeEventListener("click", handleCardClick)
-
-    resetBoard()
+    resetGame()
 }
 
 function unflipCards() {
@@ -104,14 +102,16 @@ function unflipCards() {
     setTimeout(() => {
         firstCard.classList.remove("flip")
         secondCard.classList.remove("flip")
-        firstCard.style.backgroundColor = ""
-        secondCard.style.backgroundColor = ""
+        // firstCard.style.backgroundColor = ""
+        // secondCard.style.backgroundColor = ""
+        firstCard.style.backgroundImage = ""
+        secondCard.style.backgroundImage = ""
 
-        resetBoard()
+        resetGame()
     }, 1000)
 }
 
-function resetBoard() {
+function resetGame() {
     cardFlipped = false
     lockGame = false
     firstCard = null
