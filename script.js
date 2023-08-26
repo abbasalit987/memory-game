@@ -1,26 +1,24 @@
-const gameContainer = document.getElementById("game")
+// ELEMENTS BY CLASS OR ID
 
-const COLORS = [
-    ["red", "./gifs/1.gif"],
-    ["blue", "./gifs/2.gif"],
-    ["green", "./gifs/3.gif"],
-    ["orange", "./gifs/9.gif"],
-    ["purple", "./gifs/5.gif"],
-    ["red", "./gifs/1.gif"],
-    ["blue", "./gifs/2.gif"],
-    ["green", "./gifs/3.gif"],
-    ["orange", "./gifs/9.gif"],
-    ["purple", "./gifs/5.gif"],
-]
+let gameContainer = document.getElementById("game")
+let startGameBtn = document.getElementsByClassName("start-game")
+let resetGameBtn = document.getElementsByClassName("restart-game")
+let gameForm = document.getElementById("game-inputs-form")
+let nGifs = document.getElementById("gifs-n").value
+let movesCount = document.getElementsByClassName("moves-count")
+
+// GLOBAL VARIABLES
 
 let cardFlipped = false
 let lockGame = false
 let firstCard, secondCard
+let nMatches = 0
+let nClicks = 0
 
 // here is a helper function to shuffle an array
 // it returns the same array with values shuffled
 // it is based on an algorithm called Fisher Yates if you want ot research more
-function shuffle(array) {
+const shuffle = (array) => {
     let counter = array.length
 
     // While there are elements in the array
@@ -40,101 +38,130 @@ function shuffle(array) {
     return array
 }
 
-let shuffledColors = shuffle(COLORS)
-
 // this function loops over the array of colors
 // it creates a new div and gives it a class with the value of the color
 // it also adds an event listener for a click for each card
-function createDivsForColors(colorArray) {
+const createDivsForColors = (colorArray) => {
     // let count = 0
     for (let color of colorArray) {
-        // count = count + 1
         // create a new div
         const newDiv = document.createElement("div")
 
-        // give it a class attribute for the value we are looping over
-        newDiv.classList.add(color[0])
-        newDiv.classList.add(color[1])
+        newDiv.classList.add(color)
 
         // call a function handleCardClick when a div is clicked on
         newDiv.addEventListener("click", handleCardClick)
 
         // append the div to the element with an id of game
         gameContainer.append(newDiv)
-
-        // if (count === 5) {
-        //     count = 0
-        //     console.log(gameContainer)
-        //     let breakLine = document.createElement("br")
-        //     gameContainer.append(breakLine)
-        // }
     }
 }
 
 // TODO: Implement this function!
-function handleCardClick(event) {
+const handleCardClick = (event) => {
     // you can use event.target to see which element was clicked
     // console.log("you clicked", event.target)
     if (lockGame) {
         return
     }
+    nClicks = nClicks + 1
     if (event.target === firstCard) {
         return
     }
 
     event.target.classList.add("flip")
-    // event.target.style.backgroundColor = event.target.classList[0]
 
     if (!cardFlipped) {
         // first click
         cardFlipped = event.target
         firstCard = event.target
-        firstCard.style.backgroundImage = `url(${firstCard.classList[1]})`
+        firstCard.style.backgroundImage = `url(${firstCard.classList[0]})`
     } else {
         // second click
         secondCard = event.target
-        secondCard.style.backgroundImage = `url(${secondCard.classList[1]})`
+        secondCard.style.backgroundImage = `url(${secondCard.classList[0]})`
         checkForMatch()
+        updateScoreBoard(nClicks)
     }
 }
 
-function checkForMatch() {
+const checkForMatch = () => {
     let isMatch = firstCard.classList[0] === secondCard.classList[0]
-    // isMatch ? lockCards() : unflipCards()
     if (isMatch) {
+        nMatches = nMatches + 1
         lockCards()
+        checkAllMatched(nMatches)
     } else {
         unflipCards()
     }
 }
 
-function lockCards() {
+const lockCards = () => {
     firstCard.removeEventListener("click", handleCardClick)
     secondCard.removeEventListener("click", handleCardClick)
     resetGame()
 }
 
-function unflipCards() {
+const unflipCards = () => {
     lockGame = true
 
     setTimeout(() => {
         firstCard.classList.remove("flip")
         secondCard.classList.remove("flip")
-        // firstCard.style.backgroundColor = ""
-        // secondCard.style.backgroundColor = ""
         firstCard.style.backgroundImage = ""
         secondCard.style.backgroundImage = ""
-
         resetGame()
     }, 1000)
 }
 
-function resetGame() {
+const resetGame = () => {
     cardFlipped = false
     lockGame = false
     firstCard = null
     secondCard = null
 }
 
+const checkAllMatched = (nMatches) => {
+    if (nMatches === Number(document.getElementById("gifs-n").value)) {
+        resetGameBtn[0].style.display = "flex"
+    }
+}
+
+const updateScoreBoard = (nClicks) => {
+    let nMoves = Math.floor(nClicks / 2)
+    movesCount[0].textContent = nMoves
+    localStorage.setItem("lastScore", nMoves)
+    
+}
+
+resetGameBtn[0].addEventListener("click", () => {
+    resetGameBtn[0].style.display = "none"
+    nMatches = 0
+    while (gameContainer.firstChild) {
+        gameContainer.removeChild(gameContainer.lastChild)
+    }
+    createCustomGame(nGifs)
+})
+
+const createCustomGame = (nGifs) => {
+    let pics = []
+    for (let index = 1; index <= nGifs; index++) {
+        let gifName = "../gifs/" + index + ".gif"
+        pics.push(gifName)
+    }
+    pics = pics.concat(pics)
+    pics = shuffle(pics)
+    createDivsForColors(pics)
+}
+
 // when the DOM loads
-createDivsForColors(shuffledColors)
+document.addEventListener("DOMContentLoaded", () => {
+    startGameBtn[0].addEventListener("click", (event) => {
+        event.preventDefault()
+        while (gameContainer.firstChild) {
+            gameContainer.removeChild(gameContainer.lastChild)
+        }
+        nGifs = document.getElementById("gifs-n").value
+        createCustomGame(nGifs)
+    })
+})

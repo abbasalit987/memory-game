@@ -7,8 +7,46 @@
         <link rel="stylesheet" href="style.css" />
     </head>
     <body>
-        <h1>Memory Game!</h1>
-        <div id="game" class="memory-game"></div>
+        <header>
+            <h1>Memory Game!</h1>
+            <div class="game-controls">
+                <div class="game-inputs">
+                    <form id="game-inputs-form">
+                        <label for="gifs-n">Enter the number of gifs:</label>
+                        <input
+                            type="number"
+                            id="gifs-n"
+                            name="gifs-n"
+                            value="5"
+                        /><br /><br />
+                        <!-- <button class="start-game">Start Game</button> -->
+                        <input
+                            type="submit"
+                            value="Start Game"
+                            class="start-game"
+                        />
+                    </form>
+                </div>
+            </div>
+            <div class="score-card">
+                <div>
+                    <h1>Moves :</h1>
+                    <h1 class="moves-count"></h1>
+                </div>
+                <div>
+                    <h1>Best Score :</h1>
+                    <h1 class="best-score"></h1>
+                </div>
+            </div>
+        </header>
+        <section>
+            <div id="game" class="memory-game"></div>
+        </section>
+        <footer>
+            <div class="controller-button">
+                <button class="restart-game">Restart Game</button>
+            </div>
+        </footer>
         <script src="script.js"></script>
     </body>
 </html>

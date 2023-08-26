@@ -1,4 +1,4 @@
-body h1{
+body h1 {
   display: flex;
   justify-content: center;
 }
@@ -17,7 +17,7 @@ body h1{
   flex-basis: calc(20% - 20px);
   height: 200px;
   /* background-color: #333; */
-  background-image: url("./gifs/6.gif");
+  background-image: url("batman.gif");
   border-radius: 10px;
   margin: 10px;
   cursor: pointer;
@@ -32,4 +32,8 @@ body h1{
 
 .memory-game div {
   transition: transform 0.5s ease, background-color 0.5s ease;
+}
+
+.restart-game {
+  display: none;
 }
