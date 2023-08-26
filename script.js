@@ -1,14 +1,13 @@
 // ELEMENTS BY CLASS OR ID
-
 let gameContainer = document.getElementById("game")
 let startGameBtn = document.getElementsByClassName("start-game")
 let resetGameBtn = document.getElementsByClassName("restart-game")
 let gameForm = document.getElementById("game-inputs-form")
 let nGifs = document.getElementById("gifs-n").value
 let movesCount = document.getElementsByClassName("moves-count")
+let bestScore = document.getElementsByClassName("best-score")
 
 // GLOBAL VARIABLES
-
 let cardFlipped = false
 let lockGame = false
 let firstCard, secondCard
@@ -20,7 +19,6 @@ let nClicks = 0
 // it is based on an algorithm called Fisher Yates if you want ot research more
 const shuffle = (array) => {
     let counter = array.length
-
     // While there are elements in the array
     while (counter > 0) {
         // Pick a random index
@@ -34,7 +32,6 @@ const shuffle = (array) => {
         array[counter] = array[index]
         array[index] = temp
     }
-
     return array
 }
 
@@ -46,12 +43,9 @@ const createDivsForColors = (colorArray) => {
     for (let color of colorArray) {
         // create a new div
         const newDiv = document.createElement("div")
-
         newDiv.classList.add(color)
-
         // call a function handleCardClick when a div is clicked on
         newDiv.addEventListener("click", handleCardClick)
-
         // append the div to the element with an id of game
         gameContainer.append(newDiv)
     }
@@ -104,7 +98,6 @@ const lockCards = () => {
 
 const unflipCards = () => {
     lockGame = true
-
     setTimeout(() => {
         firstCard.classList.remove("flip")
         secondCard.classList.remove("flip")
@@ -123,45 +116,50 @@ const resetGame = () => {
 
 const checkAllMatched = (nMatches) => {
     if (nMatches === Number(document.getElementById("gifs-n").value)) {
+        localStorage.setItem("lastScore", Math.floor(nClicks / 2))
+        let lastScore = localStorage.getItem("lastScore")
+        let bestScore = localStorage.getItem("bestScore")
+        if (bestScore == null) {
+            localStorage.setItem("bestScore", lastScore)
+        } else if (lastScore < bestScore) {
+            localStorage.setItem("bestScore", lastScore)
+        }
         resetGameBtn[0].style.display = "flex"
     }
 }
 
 const updateScoreBoard = (nClicks) => {
-    let nMoves = Math.floor(nClicks / 2)
-    movesCount[0].textContent = nMoves
-    localStorage.setItem("lastScore", nMoves)
-    
+    // nMoves = Math.floor(nClicks / 2)
+    // console.log(nMoves)
+    movesCount[0].textContent = Math.floor(nClicks / 2)
+    bestScore[0].textContent = localStorage.getItem("bestScore")
 }
 
 resetGameBtn[0].addEventListener("click", () => {
     resetGameBtn[0].style.display = "none"
     nMatches = 0
-    while (gameContainer.firstChild) {
-        gameContainer.removeChild(gameContainer.lastChild)
-    }
+    nClicks = 0
+    gameContainer.textContent = ""
     createCustomGame(nGifs)
 })
 
 const createCustomGame = (nGifs) => {
     let pics = []
     for (let index = 1; index <= nGifs; index++) {
-        let gifName = "../gifs/" + index + ".gif"
-        pics.push(gifName)
+        pics.push(`../gifs/${index}.gif`)
     }
-    pics = pics.concat(pics)
-    pics = shuffle(pics)
-    createDivsForColors(pics)
+    createDivsForColors(shuffle(pics.concat(pics)))
 }
 
 // when the DOM loads
 document.addEventListener("DOMContentLoaded", () => {
     startGameBtn[0].addEventListener("click", (event) => {
         event.preventDefault()
-        while (gameContainer.firstChild) {
-            gameContainer.removeChild(gameContainer.lastChild)
-        }
+        nClicks = 0
+        gameContainer.textContent = ""
+        movesCount[0].textContent = Math.floor(nClicks / 2)
         nGifs = document.getElementById("gifs-n").value
         createCustomGame(nGifs)
     })
+    bestScore[0].textContent = localStorage.getItem("bestScore")
 })

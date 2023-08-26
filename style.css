@@ -1,6 +1,7 @@
 body h1 {
   display: flex;
   justify-content: center;
+  /* background-color: #91769b; */
 }
 
 .memory-game {
@@ -11,6 +12,7 @@ body h1 {
   margin: 0 auto;
   padding: 20px;
   box-sizing: border-box;
+  /* background-color: #91769b; */
 }
 
 .memory-game div {
