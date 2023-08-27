@@ -1,7 +1,15 @@
-body h1 {
-  display: flex;
-  justify-content: center;
-  /* background-color: #91769b; */
+body {
+  background-color: #000;
+  color: #fff;
+  font-family: 'Courier New', monospace;
+  margin: 0;
+  padding: 20px;
+}
+
+h1 {
+  font-size: 36px;
+  text-align: center;
+  letter-spacing: 3px;
 }
 
 .memory-game {
@@ -12,30 +20,63 @@ body h1 {
   margin: 0 auto;
   padding: 20px;
   box-sizing: border-box;
-  /* background-color: #91769b; */
 }
 
 .memory-game div {
   flex-basis: calc(20% - 20px);
   height: 200px;
-  /* background-color: #333; */
-  background-image: url("batman.gif");
+  background-color: #333;
   border-radius: 10px;
   margin: 10px;
   cursor: pointer;
   perspective: 1000px;
   background-size: cover;
   background-repeat: no-repeat;
+  transition: transform 0.5s ease, background-color 0.5s ease;
+  border: 3px solid #00f;
+  background-color: #00f;
+  box-shadow: 3px 3px 0 #ff0;
 }
 
 .memory-game div.flip {
   transform: rotateY(180deg);
+  background-color: #000;
+  box-shadow: -3px -3px 0 #00f;
 }
 
-.memory-game div {
-  transition: transform 0.5s ease, background-color 0.5s ease;
-}
-
+.start-game,
 .restart-game {
-  display: none;
+  background-color: #f00;
+  color: #fff;
+  border: none;
+  padding: 10px 20px;
+  font-size: 18px;
+  cursor: pointer;
+  letter-spacing: 1px;
+  text-transform: uppercase;
+  outline: none;
+}
+
+.score-card {
+  display: flex;
+  justify-content: space-between;
+  margin-top: 20px;
+  font-size: 24px;
+  text-align: center;
+}
+
+footer {
+  text-align: center;
+  margin-top: 20px;
+}
+
+.controller-button {
+  display: inline-block;
+  margin: 10px;
+}
+
+.moves-count,
+.best-score {
+  font-family: 'Comic Sans MS', cursive;
+  margin: 5px;
 }
