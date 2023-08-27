@@ -80,3 +80,9 @@ footer {
   font-family: 'Comic Sans MS', cursive;
   margin: 5px;
 }
+
+@media (max-width: 768px) {
+  .memory-game div {
+    flex-basis: calc(33.33% - 20px);
+  }
+}
