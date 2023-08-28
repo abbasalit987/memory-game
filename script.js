@@ -6,6 +6,7 @@ let gameForm = document.getElementById("game-inputs-form")
 let nGifs = document.getElementById("gifs-n").value
 let movesCount = document.getElementsByClassName("moves-count")
 let bestScore = document.getElementsByClassName("best-score")
+let errorMsg = document.getElementsByClassName("errorMsg")
 
 // GLOBAL VARIABLES
 let cardFlipped = false
@@ -22,8 +23,11 @@ document.addEventListener("DOMContentLoaded", () => {
         movesCount[0].textContent = Math.floor(nClicks / 2)
         nGifs = parseInt(document.getElementById("gifs-n").value)
         if (nGifs < 1 || nGifs > 11) {
-            alert("Please enter a number between 1 and 11.")
+            // alert("Please enter a number between 1 and 11.")
+            errorMsg[0].style.display = "flex"
             return
+        } else {
+            errorMsg[0].style.display = "none"
         }
         createCustomGame(nGifs)
     })
