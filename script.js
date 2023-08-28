@@ -32,14 +32,12 @@ document.addEventListener("DOMContentLoaded", () => {
         createCustomGame(nGifs)
     })
     // bestScore[0].textContent = localStorage.getItem("bestScore") || "N/A"
-    // updateScoreBoard(nClicks)
 })
 
 // this function loops over the array of colors
 // it creates a new div and gives it a class with the value of the color
 // it also adds an event listener for a click for each card
 const createDivsForColors = (colorArray) => {
-    // let count = 0
     for (let color of colorArray) {
         // create a new div
         const newDiv = document.createElement("div")
@@ -138,9 +136,8 @@ const resetGame = () => {
 const checkAllMatched = (nMatches) => {
     if (nMatches === Number(document.getElementById("gifs-n").value)) {
         localStorage.setItem("lastScore", Math.floor(nClicks / 2))
-        console.log("moves :" + Math.floor(nClicks / 2))
+        let lastScore = localStorage.getItem("lastScore")
         let bestScore = localStorage.getItem("bestScore")
-        console.log(bestScore)
 
         if (
             bestScore == null ||
