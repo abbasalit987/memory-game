@@ -152,7 +152,7 @@ const updateScoreBoard = (nClicks) => {
 }
 
 resetGameBtn[0].addEventListener("click", () => {
-    resetGameBtn[0].style.display = "none"
+    // resetGameBtn[0].style.display = "none"
     nMatches = 0
     nClicks = 0
     gameContainer.textContent = ""

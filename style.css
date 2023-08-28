@@ -7,9 +7,17 @@ body {
 }
 
 h1 {
-  font-size: 36px;
+  font-size: 24px;
   text-align: center;
   letter-spacing: 3px;
+}
+
+.game-controls,
+.game-inputs,
+#game-inputs-form {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
 }
 
 .memory-game {
@@ -82,8 +90,29 @@ footer {
   margin: 5px;
 }
 
-@media (max-width: 768px) {
+@media (max-width: 400px) {
   .memory-game div {
     flex-basis: calc(33.33% - 20px);
+    height: 100px;
+    background-color: #333;
+    border-radius: 10px;
+    margin: 10px;
+    cursor: pointer;
+    perspective: 1000px;
+    background-size: cover;
+    background-repeat: no-repeat;
+    transition: transform 0.5s ease, background-color 0.5s ease;
+    /* border: 3px solid #00f; */
+    /* background-color: #00f; */
+    background-image: url("./batman.gif");
+    box-shadow: 3px 3px 0 #ff0;
+  }
+
+  .score-card {
+    display: flex;
+    justify-content: space-around;
+    margin-top: 20px;
+    font-size: 24px;
+    text-align: center;
   }
 }
