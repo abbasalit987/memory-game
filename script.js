@@ -31,7 +31,6 @@ document.addEventListener("DOMContentLoaded", () => {
         }
         createCustomGame(nGifs)
     })
-    // bestScore[0].textContent = localStorage.getItem("bestScore") || "N/A"
 })
 
 // this function loops over the array of colors
