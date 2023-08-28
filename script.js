@@ -18,12 +18,12 @@ let nClicks = 0
 document.addEventListener("DOMContentLoaded", () => {
     startGameBtn[0].addEventListener("click", (event) => {
         event.preventDefault()
+        nMatches = 0
         nClicks = 0
         gameContainer.textContent = ""
-        movesCount[0].textContent = Math.floor(nClicks / 2)
+        updateScoreBoard(nClicks)
         nGifs = parseInt(document.getElementById("gifs-n").value)
         if (nGifs < 1 || nGifs > 11) {
-            // alert("Please enter a number between 1 and 11.")
             errorMsg[0].style.display = "flex"
             return
         } else {
@@ -31,14 +31,12 @@ document.addEventListener("DOMContentLoaded", () => {
         }
         createCustomGame(nGifs)
     })
-    bestScore[0].textContent = localStorage.getItem("bestScore") || "N/A"
 })
 
 // this function loops over the array of colors
 // it creates a new div and gives it a class with the value of the color
 // it also adds an event listener for a click for each card
 const createDivsForColors = (colorArray) => {
-    // let count = 0
     for (let color of colorArray) {
         // create a new div
         const newDiv = document.createElement("div")
@@ -95,7 +93,6 @@ const handleCardClick = (event) => {
         secondCard = event.target
         secondCard.style.backgroundImage = `url(${secondCard.classList[0]})`
         checkForMatch()
-        // updateScoreBoard(nClicks)
     }
 }
 
@@ -104,10 +101,10 @@ const checkForMatch = () => {
     if (isMatch) {
         nMatches = nMatches + 1
         lockCards()
-        checkAllMatched(nMatches)
     } else {
         unflipCards()
     }
+    checkAllMatched(nMatches)
     updateScoreBoard(nClicks)
 }
 
@@ -138,25 +135,26 @@ const resetGame = () => {
 const checkAllMatched = (nMatches) => {
     if (nMatches === Number(document.getElementById("gifs-n").value)) {
         localStorage.setItem("lastScore", Math.floor(nClicks / 2))
-        let lastScore = localStorage.getItem("lastScore")
+        // console.log("moves :" + Math.floor(nClicks / 2))
         let bestScore = localStorage.getItem("bestScore")
+        // console.log(bestScore)
 
-        if (bestScore == null || parseInt(lastScore) < parseInt(bestScore)) {
-            localStorage.setItem("bestScore", lastScore)
+        if (
+            bestScore == null ||
+            Math.floor(nClicks / 2) < parseInt(bestScore)
+        ) {
+            localStorage.setItem("bestScore", Math.floor(nClicks / 2))
         }
         resetGameBtn[0].style.display = "flex"
     }
 }
 
 const updateScoreBoard = (nClicks) => {
-    // nMoves = Math.floor(nClicks / 2)
-    // console.log(nMoves)
     movesCount[0].textContent = Math.floor(nClicks / 2)
-    bestScore[0].textContent = localStorage.getItem("bestScore")
+    bestScore[0].textContent = localStorage.getItem("bestScore") || "N/A"
 }
 
 resetGameBtn[0].addEventListener("click", () => {
-    // resetGameBtn[0].style.display = "none"
     nMatches = 0
     nClicks = 0
     gameContainer.textContent = ""
